@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: sentinel-iam
+  datasource:
+    url: jdbc:postgresql://localhost:5432/sentinel_iam
+    username: sentinel
+    password: sentinel_pass
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  flyway:
+    enabled: false
+

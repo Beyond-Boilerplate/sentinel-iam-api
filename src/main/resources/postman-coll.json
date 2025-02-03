@@ -1,0 +1,73 @@
+{
+  "info": {
+    "_postman_id": "88ca3cb4-1db2-45ca-bbdc-df2a02765afa",
+    "name": "Sentinel IAM API",
+    "description": "API for application and user onboarding in IAM",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "10048771",
+    "_collection_link": "https://www.postman.com/poudelsagar530/workspace/spring-bootcamp/collection/10048771-88ca3cb4-1db2-45ca-bbdc-df2a02765afa?action=share&source=collection_link&creator=10048771"
+  },
+  "item": [
+    {
+      "name": "Get All Applications",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/applications",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "applications"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Upload Application CSV",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "metadata",
+              "value": "{\"applicationName\": \"Test App2\", \"ownerEmail\": \"owner@example.com\", \"department\": \"IT\"}",
+              "contentType": "application/json",
+              "type": "text"
+            },
+            {
+              "key": "file",
+              "type": "file",
+              "src": "/Users/sagarpoudel/Downloads/file.csv"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:8080/applications/upload",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "applications",
+            "upload"
+          ]
+        },
+        "description": "Generated from cURL: curl --location 'http://localhost:8080/applications/upload' \\\n--form 'metadata={\"applicationName\": \"Test App\", \"ownerEmail\": \"owner@example.com\", \"department\": \"IT\"};type=application/json' \\\n--form 'file=@\"/Users/sagarpoudel/Downloads/file.csv\"'"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ]
+}

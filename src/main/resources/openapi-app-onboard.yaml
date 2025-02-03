@@ -1,0 +1,136 @@
+openapi: 3.0.3
+info:
+  title: Sentinel IAM API
+  description: API for application and user onboarding in IAM
+  version: 1.0.0
+  contact:
+    name: Sentinel IAM Team
+    email: support@sentineliam.com
+  license:
+    name: MIT License
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:8080
+    description: Local Development Server
+  - url: https://api.sentineliam.com
+    description: Production Server
+
+paths:
+  /applications:
+    get:
+      summary: Retrieve all applications
+      operationId: getApplications
+      tags:
+        - Applications
+      responses:
+        "200":
+          description: Successfully retrieved applications
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+              description: Caching policy
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ApplicationResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /applications/upload:
+    post:
+      summary: Upload a CSV file to onboard users to an application
+      operationId: uploadApplicationCsv
+      tags:
+        - Applications
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                metadata:
+                  type: object
+                  properties:
+                    applicationName:
+                      type: string
+                      description: Name of the application
+                    ownerEmail:
+                      type: string
+                      description: Email of the application owner
+                    department:
+                      type: string
+                      description: Department associated with the application
+                file:
+                  type: string
+                  format: binary
+                  description: CSV file containing user data
+      responses:
+        "201":
+          description: Successfully uploaded CSV file and onboarded users
+          headers:
+            Location:
+              schema:
+                type: string
+              description: URI of the created application
+        "400":
+          description: Invalid input
+        "415":
+          description: Unsupported media type (only CSV allowed)
+        "500":
+          description: Server error
+
+
+components:
+  schemas:
+    ApplicationResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        ownerEmail:
+          type: string
+        department:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        users:
+          type: array
+          items:
+            $ref: "#/components/schemas/UserResponse"
+
+    UserResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+
+    ErrorResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
