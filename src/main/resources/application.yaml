@@ -16,3 +16,9 @@ spring:
   flyway:
     enabled: false
 
+csv:
+  headers:
+    - username
+    - email
+    - role
+

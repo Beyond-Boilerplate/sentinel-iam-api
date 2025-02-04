@@ -22,5 +22,12 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "application_id")
     private Application application;
+
+    public User(String username, String email, String role, Application application) {
+        this.username = username;
+        this.email = email;
+        this.role = role;
+        this.application = application;
+    }
 }
 
